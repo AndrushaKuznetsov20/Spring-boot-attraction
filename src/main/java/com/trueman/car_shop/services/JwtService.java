@@ -1,5 +1,7 @@
 package com.trueman.car_shop.services;
 
+import com.trueman.car_shop.models.User;
+import com.trueman.car_shop.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

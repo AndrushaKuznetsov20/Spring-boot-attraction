@@ -1,5 +1,6 @@
 package com.trueman.car_shop.filter;
 
+import com.trueman.car_shop.services.JwtService;
 import com.trueman.car_shop.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
