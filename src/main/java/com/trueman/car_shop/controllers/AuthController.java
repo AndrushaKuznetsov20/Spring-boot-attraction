@@ -1,8 +1,15 @@
 package com.trueman.car_shop.controllers;
 
+import com.trueman.car_shop.dto.SignInRequest;
+import com.trueman.car_shop.dto.SignUpRequest;
+import com.trueman.car_shop.services.AuthenticationService;
+import com.trueman.car_shop.services.IsValidAuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -10,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationService authenticationService;
     private final IsValidAuthService isValidAuthService;
+
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up/{selectedRole}")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequest request,

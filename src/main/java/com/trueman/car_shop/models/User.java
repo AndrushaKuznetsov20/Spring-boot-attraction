@@ -36,6 +36,10 @@ public class User implements UserDetails {
     @Column(name = "number", unique = true, nullable = false)
     private String number;
 
+    @Description("Пароль")
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Description("Активность пользователя")
     @Column(name = "active")
     private boolean active;
