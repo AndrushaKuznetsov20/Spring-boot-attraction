@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
+    boolean existsByNumber(String number);
+
     @Query("SELECT u FROM User u WHERE u.username = :username")
     User findByNameIsValidAuth(String username);
 }

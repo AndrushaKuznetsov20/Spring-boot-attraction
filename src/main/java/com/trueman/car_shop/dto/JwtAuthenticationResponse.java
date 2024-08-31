@@ -6,7 +6,6 @@ import lombok.*;
 @Data
 @RequiredArgsConstructor
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Ответ c токеном доступа")
 public class JwtAuthenticationResponse {

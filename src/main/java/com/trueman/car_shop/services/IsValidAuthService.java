@@ -44,17 +44,24 @@ public class IsValidAuthService {
         {
             if(!userRepository.existsByEmail(signUpRequest.getEmail()))
             {
-                authenticationService.signUp(signUpRequest, selectedRole);
-                return ResponseEntity.ok("Регистрация прошла успешно!");
+                if(!userRepository.existsByNumber(signUpRequest.getNumber()))
+                {
+                    authenticationService.signUp(signUpRequest, selectedRole);
+                    return ResponseEntity.ok("Регистрация прошла успешно !");
+                }
+                else
+                {
+                    return ResponseEntity.ok("Пользователь с номером" + " " + signUpRequest.getNumber() + " " + "уже существует !");
+                }
             }
             else
             {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                return ResponseEntity.ok("Пользователь с Email" + " " + signUpRequest.getEmail() + " " + "уже существует !");
             }
         }
         else
         {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return ResponseEntity.ok("Пользователь с логином" + " " + signUpRequest.getUsername() + " " + "уже существует");
         }
     }
 }
