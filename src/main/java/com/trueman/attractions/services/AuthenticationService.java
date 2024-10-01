@@ -27,12 +27,12 @@ public class AuthenticationService {
         user.setPassword(passwordEncoderService.passwordEncoder().encode(request.getPassword()));
         user.setActive(true);
 
-        if(selectedRole.equals("CUSTOMER"))
+        if(selectedRole.equals("SIMPLE_USER"))
         {
-            user.setRole(Role.CUSTOMER);
+            user.setRole(Role.SIMPLE_USER);
         }
         else {
-            user.setRole(Role.SALESMAN);
+            user.setRole(Role.MODERATOR);
         }
 
         userService.create(user);

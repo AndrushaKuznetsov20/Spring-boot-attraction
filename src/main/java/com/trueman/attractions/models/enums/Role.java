@@ -1,7 +1,6 @@
 package com.trueman.attractions.models.enums;
 
 public enum Role {
-    CUSTOMER,
-    SALESMAN,
+    SIMPLE_USER,
     MODERATOR
 }
