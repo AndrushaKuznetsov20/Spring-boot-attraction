@@ -1,7 +1,7 @@
-package com.trueman.car_shop.configurations;
+package com.trueman.attractions.configurations;
 
-import com.trueman.car_shop.filter.JwtAuthenticationFilter;
-import com.trueman.car_shop.services.UserService;
+import com.trueman.attractions.filter.JwtAuthenticationFilter;
+import com.trueman.attractions.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

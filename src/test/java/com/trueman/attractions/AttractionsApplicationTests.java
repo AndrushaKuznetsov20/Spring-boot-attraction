@@ -1,10 +1,10 @@
-package com.trueman.car_shop;
+package com.trueman.attractions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CarShopApplicationTests {
+class AttractionsApplicationTests {
 
 	@Test
 	void contextLoads() {

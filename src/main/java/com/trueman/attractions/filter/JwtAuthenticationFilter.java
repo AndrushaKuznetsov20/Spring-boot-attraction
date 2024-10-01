@@ -1,7 +1,7 @@
-package com.trueman.car_shop.filter;
+package com.trueman.attractions.filter;
 
-import com.trueman.car_shop.services.JwtService;
-import com.trueman.car_shop.services.UserService;
+import com.trueman.attractions.services.JwtService;
+import com.trueman.attractions.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.trueman.car_shop.dto;
+package com.trueman.attractions.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

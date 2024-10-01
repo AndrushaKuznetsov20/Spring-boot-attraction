@@ -1,4 +1,4 @@
-package com.trueman.car_shop.services;
+package com.trueman.attractions.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

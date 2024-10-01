@@ -1,10 +1,10 @@
-package com.trueman.car_shop.services;
+package com.trueman.attractions.services;
 
-import com.trueman.car_shop.dto.JwtAuthenticationResponse;
-import com.trueman.car_shop.dto.SignInRequest;
-import com.trueman.car_shop.dto.SignUpRequest;
-import com.trueman.car_shop.models.User;
-import com.trueman.car_shop.models.enums.Role;
+import com.trueman.attractions.dto.JwtAuthenticationResponse;
+import com.trueman.attractions.dto.SignInRequest;
+import com.trueman.attractions.dto.SignUpRequest;
+import com.trueman.attractions.models.User;
+import com.trueman.attractions.models.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

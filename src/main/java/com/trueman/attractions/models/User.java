@@ -1,7 +1,6 @@
-package com.trueman.car_shop.models;
+package com.trueman.attractions.models;
 
-
-import com.trueman.car_shop.models.enums.Role;
+import com.trueman.attractions.models.enums.Role;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.Data;

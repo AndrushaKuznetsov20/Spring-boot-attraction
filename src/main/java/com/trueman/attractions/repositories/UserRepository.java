@@ -1,6 +1,6 @@
-package com.trueman.car_shop.repositories;
+package com.trueman.attractions.repositories;
 
-import com.trueman.car_shop.models.User;
+import com.trueman.attractions.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

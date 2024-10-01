@@ -1,7 +1,7 @@
-package com.trueman.car_shop.services;
+package com.trueman.attractions.services;
 
-import com.trueman.car_shop.models.User;
-import com.trueman.car_shop.repositories.UserRepository;
+import com.trueman.attractions.models.User;
+import com.trueman.attractions.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

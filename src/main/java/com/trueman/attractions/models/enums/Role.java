@@ -1,4 +1,4 @@
-package com.trueman.car_shop.models.enums;
+package com.trueman.attractions.models.enums;
 
 public enum Role {
     CUSTOMER,

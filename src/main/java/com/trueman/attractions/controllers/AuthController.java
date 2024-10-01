@@ -1,9 +1,9 @@
-package com.trueman.car_shop.controllers;
+package com.trueman.attractions.controllers;
 
-import com.trueman.car_shop.dto.SignInRequest;
-import com.trueman.car_shop.dto.SignUpRequest;
-import com.trueman.car_shop.services.AuthenticationService;
-import com.trueman.car_shop.services.IsValidAuthService;
+import com.trueman.attractions.dto.SignInRequest;
+import com.trueman.attractions.dto.SignUpRequest;
+import com.trueman.attractions.services.AuthenticationService;
+import com.trueman.attractions.services.IsValidAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
