@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.trueman</groupId>
-	<artifactId>car-shop</artifactId>
+	<artifactId>attractions</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>car-shop</name>
-	<description>Web-приложение продажи запчастей для автомобилей Ford Focus</description>
+	<name>Attractions</name>
+	<description>Сервис для хранения данных о достопримечательностях</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -70,7 +70,11 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.6.0</version>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
