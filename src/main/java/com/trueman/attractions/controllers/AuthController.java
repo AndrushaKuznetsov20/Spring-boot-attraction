@@ -1,7 +1,7 @@
 package com.trueman.attractions.controllers;
 
-import com.trueman.attractions.dto.SignInRequest;
-import com.trueman.attractions.dto.SignUpRequest;
+import com.trueman.attractions.dto.auth.SignInRequest;
+import com.trueman.attractions.dto.auth.SignUpRequest;
 import com.trueman.attractions.services.AuthenticationService;
 import com.trueman.attractions.services.IsValidAuthService;
 import io.swagger.v3.oas.annotations.Operation;

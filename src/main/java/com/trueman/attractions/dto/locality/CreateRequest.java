@@ -1,12 +1,10 @@
 package com.trueman.attractions.dto.locality;
 
-import com.trueman.attractions.models.Attraction;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Schema(description = "Запрос на создание местоположения")
@@ -21,11 +19,9 @@ public class CreateRequest {
     @NotBlank(message = "Регион не может быть пустым")
     private String region;
 
-    private List<Attraction> attractionList;
-
-    @NotBlank(message = "Значение широты не может быть пустым")
+    @NotNull(message = "Значение широты не может быть пустым")
     private double latitude;
 
-    @NotBlank(message = "Значение долготы не может быть пустым")
+    @NotNull(message = "Значение долготы не может быть пустым")
     private double longitude;
 }

@@ -1,5 +1,6 @@
 package com.trueman.attractions.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.Data;
@@ -27,8 +28,8 @@ public class Locality {
     private String region;
 
     @Description("Список достопримечательностей")
-    @OneToMany
-    @Column(name = "attractionsList")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "locality")
     private List<Attraction> attractionList;
 
     @Description("Широта")

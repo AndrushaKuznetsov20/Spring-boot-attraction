@@ -1,8 +1,8 @@
 package com.trueman.attractions.services;
 
-import com.trueman.attractions.dto.JwtAuthenticationResponse;
-import com.trueman.attractions.dto.SignInRequest;
-import com.trueman.attractions.dto.SignUpRequest;
+import com.trueman.attractions.dto.auth.JwtAuthenticationResponse;
+import com.trueman.attractions.dto.auth.SignInRequest;
+import com.trueman.attractions.dto.auth.SignUpRequest;
 import com.trueman.attractions.models.User;
 import com.trueman.attractions.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

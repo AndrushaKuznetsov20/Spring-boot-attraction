@@ -34,7 +34,7 @@ public class Assistance {
 
     @Description("Список достопримечательностей")
     @ManyToMany
-    @Column(name = "attractionList")
+    @JoinTable
     private List<Attraction> attractionList;
 
 }
