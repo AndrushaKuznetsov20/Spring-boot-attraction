@@ -19,11 +19,11 @@ public class Locality {
     private Long id;
 
     @Description("Населённый пункт")
-    @Column(name = "settlement")
+    @Column(name = "settlement", unique = true, nullable = false)
     private String settlement;
 
     @Description("Регион")
-    @Column(name = "region")
+    @Column(name = "region", unique = true, nullable = false)
     private String region;
 
     @Description("Список достопримечательностей")
@@ -32,12 +32,11 @@ public class Locality {
     private List<Attraction> attractionList;
 
     @Description("Широта")
-    @Column(name = "latitude")
+    @Column(name = "latitude", unique = true, nullable = false)
     private double latitude;
 
     @Description("Долгота")
-    @Column(name = "longitude")
+    @Column(name = "longitude", unique = true, nullable = false)
     private double longitude;
-
 
 }

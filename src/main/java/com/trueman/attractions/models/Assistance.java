@@ -20,21 +20,21 @@ public class Assistance {
     private Long id;
 
     @Description("Тип услуги")
-    @Column(name = "typeAssistance")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "typeAssistance", nullable = false)
     private TypeAssistance typeAssistance;
 
     @Description("Краткое описание")
-    @Column(name = "briefDescription")
+    @Column(name = "briefDescription", nullable = false)
     private String briefDescription;
 
     @Description("Исполнитель")
-    @Column(name = "performer")
+    @Column(name = "performer", nullable = false)
     private String performer;
 
     @Description("Список достопримечательностей")
     @ManyToMany
     @Column(name = "attractionList")
     private List<Attraction> attractionList;
-
 
 }

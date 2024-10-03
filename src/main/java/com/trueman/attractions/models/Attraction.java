@@ -21,30 +21,31 @@ public class Attraction {
     private Long id;
 
     @Description("Наименование достопримечательности")
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Description("Дата создания")
-    @Column(name = "CreationDate")
+    @Column(name = "CreationDate", nullable = false)
     private LocalDate createDate;
 
     @Description("Краткое описание")
-    @Column(name = "briefDescription")
+    @Column(name = "briefDescription", nullable = false)
     private String briefDescription;
 
     @Description("Тип достопримечательности")
-    @Column(name = "typeAttraction")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "typeAttraction", nullable = false)
     private TypeAttraction typeAttraction;
 
     @Description("Местоположение")
     @ManyToOne
-    @Column(name = "locality")
+    @Column(name = "locality", nullable = false)
     private Locality locality;
 
     @Description("Список сопровождений (услуг)")
     @OneToMany
-    @Column(name = "assistanceList")
-    private List<Attraction> attractionList;
+    @Column(name = "assistanceList", nullable = false)
+    private List<Assistance> assistanceList;
 
     public void setCreateDate() {
         this.createDate = LocalDate.now();
