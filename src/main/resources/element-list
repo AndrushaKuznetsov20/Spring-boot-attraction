@@ -1,0 +1,13 @@
+com.trueman.attractions
+com.trueman.attractions.aspect
+com.trueman.attractions.configurations
+com.trueman.attractions.controllers
+com.trueman.attractions.dto.assistance
+com.trueman.attractions.dto.attraction
+com.trueman.attractions.dto.auth
+com.trueman.attractions.dto.locality
+com.trueman.attractions.filter
+com.trueman.attractions.models
+com.trueman.attractions.models.enums
+com.trueman.attractions.repositories
+com.trueman.attractions.services
