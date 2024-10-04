@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Класс, представляющий местоположение
+ */
 @Data
 @Entity
 @RequiredArgsConstructor

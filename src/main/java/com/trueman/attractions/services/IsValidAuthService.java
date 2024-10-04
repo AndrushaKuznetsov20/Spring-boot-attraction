@@ -10,12 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * Сервис валидации данных при аутентификации.
+ */
 @Service
 @RequiredArgsConstructor
 public class IsValidAuthService {
     private final UserRepository userRepository;
     private final AuthenticationService authenticationService;
 
+    /**
+     * Валидация данных при авторизации.
+     */
     public ResponseEntity<?> isValidLogin(SignInRequest signInRequest)
     {
         User existingUser = userRepository.findByNameIsValidAuth(signInRequest.getUsername());
@@ -38,6 +44,10 @@ public class IsValidAuthService {
         }
 
     }
+
+    /**
+     * Валидация данных при регистрации.
+     */
     public ResponseEntity<?> isValidRegister(SignUpRequest signUpRequest, String selectedRole)
     {
         if(!userRepository.existsByUsername(signUpRequest.getUsername()))

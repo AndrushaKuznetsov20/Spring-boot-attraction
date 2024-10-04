@@ -19,6 +19,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Класс, проверяющий входящие запросы на наличие JWT-токена в заголовке Authorization.
+ * Это позволяет приложению защищать ресурсы и обеспечивать доступ только аутентифицированным пользователям.
+ */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

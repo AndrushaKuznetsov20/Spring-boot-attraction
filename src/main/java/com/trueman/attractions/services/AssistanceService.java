@@ -4,9 +4,7 @@ import com.trueman.attractions.dto.assistance.CreateRequest;
 import com.trueman.attractions.dto.assistance.ListResponse;
 import com.trueman.attractions.dto.assistance.ReadRequest;
 import com.trueman.attractions.models.Assistance;
-import com.trueman.attractions.models.Attraction;
 import com.trueman.attractions.repositories.AssistanceRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис, который содержит бизнес-логику для управления услугами.
+ */
 @Service
 @RequiredArgsConstructor
 public class AssistanceService {
+    /**
+     * Внедрение репозитория для взаимодействия с базой данных.
+     */
     private final AssistanceRepository assistanceRepository;
 
+    /**
+     * Метод для получения списка услуг
+     */
     public ResponseEntity<?> getListAssistance() throws Exception{
         try {
             List<Assistance> assistanceList = assistanceRepository.findAll();
@@ -42,6 +49,9 @@ public class AssistanceService {
         }
     }
 
+    /**
+     * Метод для создания новой услуги
+     */
     public ResponseEntity<String> createAssistance(CreateRequest createRequest) throws Exception{
         try {
             Assistance assistance = new Assistance();
@@ -58,6 +68,9 @@ public class AssistanceService {
         }
     }
 
+    /**
+     * Метод для удаления услуги
+     */
     public ResponseEntity<String> deleteAssistance(Long id) throws Exception{
         try {
             Assistance assistance = assistanceRepository.findById(id).orElse(null);

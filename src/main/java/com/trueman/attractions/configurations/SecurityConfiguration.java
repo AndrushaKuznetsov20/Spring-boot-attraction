@@ -23,6 +23,9 @@ import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+/**
+ * Конфигурационный класс Security.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -31,6 +34,9 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
 
+    /**
+     * Настройка шаблонов путей
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -52,6 +58,9 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * Кодирование пароля
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

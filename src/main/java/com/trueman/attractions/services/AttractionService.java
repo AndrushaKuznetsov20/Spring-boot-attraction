@@ -17,13 +17,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Сервис, который содержит бизнес-логику для управления достопримечательностей.
+ */
 @Service
 @RequiredArgsConstructor
 public class AttractionService {
+    /**
+     * Внедрение репозиториев для взаимодействия с базой данных.
+     */
     private final AttractionRepository attractionRepository;
     private final LocalityRepository localityRepository;
 
+    /**
+     * Метод получения списка отфильтрованных достопримечательностей по типу достопримечательности.
+     */
     public ResponseEntity<?> getListAttraction(TypeAttraction typeAttraction) throws Exception{
         try {
             List<Attraction> attractionList;
@@ -56,6 +64,9 @@ public class AttractionService {
         }
     }
 
+    /**
+     * Метод получения списка достопримечательностей конкретного местоположения.
+     */
     public ResponseEntity<?> getListAttractionByLocality(Long localityId) throws Exception{
         try {
             Locality locality = localityRepository.findById(localityId).orElse(null);
@@ -83,6 +94,9 @@ public class AttractionService {
         }
     }
 
+    /**
+     * Метод создания новой достопримечательности.
+     */
     public ResponseEntity<String> createAttraction(CreateRequest createRequest) throws Exception{
         try {
             Attraction attraction = new Attraction();
@@ -101,6 +115,9 @@ public class AttractionService {
         }
     }
 
+    /**
+     * Метод обновления достопримечательности.
+     */
     public ResponseEntity<String> updateAttraction(UpdateRequest updateRequest, Long id) throws Exception{
         try {
             Attraction attraction = attractionRepository.findById(id).orElse(null);
@@ -115,6 +132,9 @@ public class AttractionService {
         }
     }
 
+    /**
+     * Метод удаления достопримечательности.
+     */
     public ResponseEntity<String> deleteAttraction(Long id) throws Exception{
         try {
             Attraction attraction = attractionRepository.findById(id).orElse(null);

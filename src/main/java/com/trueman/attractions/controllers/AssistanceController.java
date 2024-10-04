@@ -9,13 +9,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * Контроллер услуг.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/assistance")
 public class AssistanceController {
+    /**
+     * Внедрение сервиса для бизнес-логики.
+     */
     private final AssistanceService assistanceService;
 
+    /**
+     * Метод получения списка существующих услуг.
+     */
     @Operation(summary = "Получение списка услуг")
     @GetMapping("/read")
     public ResponseEntity<?> readAssistance() throws Exception{
@@ -23,6 +31,9 @@ public class AssistanceController {
         return assistanceService.getListAssistance();
     }
 
+    /**
+     * Метод создания новой услуги.
+     */
     @Operation(summary = "Создание новой услуги")
     @PostMapping("/create")
     public ResponseEntity<String> createAssistance(@RequestBody @Valid CreateRequest createRequest,
@@ -38,6 +49,9 @@ public class AssistanceController {
         return assistanceService.createAssistance(createRequest);
     }
 
+    /**
+     * Метод удаления услуги.
+     */
     @Operation(summary = "Удаление услуги по ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAssistance(@PathVariable("id") Long id) throws Exception{

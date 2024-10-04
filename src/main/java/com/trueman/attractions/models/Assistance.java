@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Класс, представляющий услугу
+ */
 @Data
 @Entity
 @RequiredArgsConstructor

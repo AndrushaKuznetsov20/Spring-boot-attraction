@@ -10,14 +10,28 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Репозиторий для работы с сущностями Attraction.
+ * Этот интерфейс расширяет JpaRepository, предоставляя стандартные методы
+ * для выполнения операций CRUD над объектами класса Attraction в базе данных.
+ */
 @Repository
 public interface AttractionRepository extends JpaRepository<Attraction, Long> {
+    /**
+     * Запрос на сортировку списка по полю name.
+     */
     @Query("SELECT a FROM Attraction a ORDER BY a.name")
     List<Attraction> findAllSortByName();
 
+    /**
+     * Запрос на фильтрацию списка по полю тип достопримечательности.
+     */
     @Query("SELECT a FROM Attraction a WHERE a.typeAttraction = :typeAttraction ORDER BY a.name")
     List<Attraction> findByTypeAttractionSortByName(@Param("typeAttraction") TypeAttraction typeAttraction);
 
+    /**
+     * Запрос на вывод списка достопримечательностей конкретного местоположения
+     */
     @Query("SELECT a FROM Attraction a WHERE a.locality = :locality")
     List<Attraction> findByLocalityAttraction(@Param("locality") Locality locality);
 }

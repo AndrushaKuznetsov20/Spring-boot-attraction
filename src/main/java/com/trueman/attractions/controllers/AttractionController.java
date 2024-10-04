@@ -12,12 +12,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер достопримечательностей.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/attraction")
 public class AttractionController {
+    /**
+     * Внедрение сервиса для бизнес-логики.
+     */
     private final AttractionService attractionService;
 
+    /**
+     * Метод получения списка существующих достопримечательностей.
+     */
     @Operation(summary = "Получение списка достопримечательностей")
     @GetMapping("/read")
     public ResponseEntity<?> readAttraction(@RequestParam(required = false) TypeAttraction typeAttraction) throws Exception{
@@ -25,6 +34,9 @@ public class AttractionController {
         return attractionService.getListAttraction(typeAttraction);
     }
 
+    /**
+     * Метод получения списка существующих достопримечательностей конкретного местоположения.
+     */
     @Operation(summary = "Получение все достопримечательности конкретного местоположения")
     @GetMapping("/readByLocality")
     public ResponseEntity<?> readAttractionByLocality(@RequestParam(required = false) Long localityId) throws Exception{
@@ -32,6 +44,9 @@ public class AttractionController {
         return attractionService.getListAttractionByLocality(localityId);
     }
 
+    /**
+     * Метод создания новой достопримечательностей.
+     */
     @Operation(summary = "Создание новой достопримечательности")
     @PostMapping("/create")
     public ResponseEntity<String> createAttraction(@RequestBody @Valid CreateRequest createRequest,
@@ -47,6 +62,9 @@ public class AttractionController {
         return attractionService.createAttraction(createRequest);
     }
 
+    /**
+     * Метод обновления достопримечательностей.
+     */
     @Operation(summary = "Обновление достопримечательности по ID")
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateAttraction(@PathVariable("id") Long id, @RequestBody @Valid
@@ -62,6 +80,9 @@ public class AttractionController {
         return attractionService.updateAttraction(updateRequest, id);
     }
 
+    /**
+     * Метод удаления достопримечательности.
+     */
     @Operation(summary = "Удаление достопримечательности по ID")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAttraction(@PathVariable("id") Long id) throws Exception{

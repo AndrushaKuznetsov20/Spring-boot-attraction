@@ -10,14 +10,23 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+/**
+ * Сервис, который содержит бизнес-логику для управления пользователями.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    /**
+     * Внедрение зависимостей.
+     */
     private final UserService userService;
     private final JwtService jwtService;
     private final PasswordEncoderService passwordEncoderService;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Метод регистрации пользователя.
+     */
     public JwtAuthenticationResponse signUp(SignUpRequest request, String selectedRole) {
 
         User user = new User();
@@ -42,6 +51,9 @@ public class AuthenticationService {
         return new JwtAuthenticationResponse(jwt);
     }
 
+    /**
+     * Метод авторизации пользователя.
+     */
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(),

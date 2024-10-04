@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Сервис, представляющий генерацию JWT-токена, а также проверки токена на валидность.
+ */
 @Service
 @RequiredArgsConstructor
 public class JwtService {

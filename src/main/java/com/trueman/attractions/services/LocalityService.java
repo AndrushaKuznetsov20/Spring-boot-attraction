@@ -16,11 +16,20 @@ import org.springframework.web.ErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис, который содержит бизнес-логику для управления местоположениями.
+ */
 @Service
 @RequiredArgsConstructor
 public class LocalityService {
+    /**
+     * Внедрение репозитория для взаимодействия с базой данных.
+     */
     private final LocalityRepository localityRepository;
 
+    /**
+     * Метод получения списка всех местоположений.
+     */
     public ResponseEntity<?> getListLocality() {
         try {
             List<Locality> localityList = localityRepository.findAll();
@@ -46,6 +55,9 @@ public class LocalityService {
         }
     }
 
+    /**
+     * Метод создания нового местоположения.
+     */
     public ResponseEntity<String> createLocality(CreateRequest createRequest) throws Exception {
         try {
             Locality locality = new Locality();
@@ -64,6 +76,9 @@ public class LocalityService {
         }
     }
 
+    /**
+     * Метод удаления местоположения.
+     */
     public ResponseEntity<String> deleteLocality(Long id) {
         try {
             Locality locality = localityRepository.findById(id).orElse(null);

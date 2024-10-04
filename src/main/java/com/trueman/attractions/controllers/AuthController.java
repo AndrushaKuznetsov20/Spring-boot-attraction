@@ -11,13 +11,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер аутентификации.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
+    /**
+     * Внедрение сервиса для бизнес-логики.
+     */
     private final AuthenticationService authenticationService;
     private final IsValidAuthService isValidAuthService;
 
+    /**
+     * Метод регистрации нового пользователя.
+     */
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up/{selectedRole}")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequest request,
@@ -33,6 +42,9 @@ public class AuthController {
         return isValidAuthService.isValidRegister(request, selectedRole);
     }
 
+    /**
+     * Метод авторизации пользователя.
+     */
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody @Valid SignInRequest request, BindingResult bindingResult) {
