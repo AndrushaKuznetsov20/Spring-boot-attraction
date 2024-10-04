@@ -4,7 +4,9 @@ import com.trueman.attractions.dto.assistance.CreateRequest;
 import com.trueman.attractions.dto.assistance.ListResponse;
 import com.trueman.attractions.dto.assistance.ReadRequest;
 import com.trueman.attractions.models.Assistance;
+import com.trueman.attractions.models.Attraction;
 import com.trueman.attractions.repositories.AssistanceRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,37 +20,55 @@ import java.util.List;
 public class AssistanceService {
     private final AssistanceRepository assistanceRepository;
 
-    public ResponseEntity<ListResponse> getListAssistance() {
+    public ResponseEntity<?> getListAssistance() throws Exception{
+        try {
+            List<Assistance> assistanceList = assistanceRepository.findAll();
+            List<ReadRequest> assistanceDTOList = new ArrayList<>();
 
-        List<Assistance> assistanceList = assistanceRepository.findAll();
-        List<ReadRequest> assistanceDTOList = new ArrayList<>();
+            for (Assistance assistance : assistanceList) {
+                ReadRequest assistanceDto = new ReadRequest();
+                assistanceDto.setId(assistance.getId());
+                assistanceDto.setTypeAssistance(assistance.getTypeAssistance());
+                assistanceDto.setBriefDescription(assistance.getBriefDescription());
+                assistanceDto.setPerformer(assistance.getPerformer());
+                assistanceDTOList.add(assistanceDto);
+            }
+            ListResponse assistanceDTOListResponse = new ListResponse();
+            assistanceDTOListResponse.setAssistances(assistanceDTOList);
 
-        for (Assistance assistance : assistanceList) {
-            ReadRequest assistanceDto = new ReadRequest();
-            assistanceDto.setId(assistance.getId());
-            assistanceDto.setTypeAssistance(assistance.getTypeAssistance());
-            assistanceDto.setBriefDescription(assistance.getBriefDescription());
-            assistanceDto.setPerformer(assistance.getPerformer());
-            assistanceDTOList.add(assistanceDto);
+            return new ResponseEntity<>(assistanceDTOListResponse, HttpStatus.OK);
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).body("Ошибка сервера!");
         }
-        ListResponse assistanceDTOListResponse = new ListResponse();
-        assistanceDTOListResponse.setAssistances(assistanceDTOList);
-
-        return new ResponseEntity<>(assistanceDTOListResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> createAssistance(CreateRequest createRequest) {
-        Assistance assistance = new Assistance();
-        assistance.setTypeAssistance(createRequest.getTypeAssistance());
-        assistance.setBriefDescription(createRequest.getBriefDescription());
-        assistance.setPerformer(createRequest.getPerformer());
+    public ResponseEntity<String> createAssistance(CreateRequest createRequest) throws Exception{
+        try {
+            Assistance assistance = new Assistance();
+            assistance.setTypeAssistance(createRequest.getTypeAssistance());
+            assistance.setBriefDescription(createRequest.getBriefDescription());
+            assistance.setPerformer(createRequest.getPerformer());
 
-        assistanceRepository.save(assistance);
-        return ResponseEntity.ok("Услуга успешно создана!");
+            assistanceRepository.save(assistance);
+            return ResponseEntity.ok("Услуга успешно создана!");
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.badRequest().body("Ошибка: неверные данные!");
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).body("Ошибка сервера!");
+        }
     }
 
-    public ResponseEntity<String> deleteAssistance(Long id) {
-        assistanceRepository.deleteById(id);
-        return ResponseEntity.ok("Услуга успешно удалена!");
+    public ResponseEntity<String> deleteAssistance(Long id) throws Exception{
+        try {
+            Assistance assistance = assistanceRepository.findById(id).orElse(null);
+            if(assistance == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Услуга с id: " + id + " не найдена!");
+            } else {
+                assistanceRepository.deleteById(id);
+                return ResponseEntity.ok("Услуга успешно удалена!");
+            }
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).body("Ошибка сервера!");
+        }
     }
 }

@@ -18,15 +18,15 @@ public class LocalityController {
 
     @Operation(summary = "Получение списка местоположений")
     @GetMapping("/read")
-    public ResponseEntity<ListResponse> readLocality() {
+    public ResponseEntity<?> readLocality() throws Exception{
 
         return localityService.getListLocality();
     }
 
     @Operation(summary = "Создание нового местоположения")
     @PostMapping("/create")
-    public ResponseEntity<String> createLocality(@RequestBody @Valid CreateRequest createRequest, BindingResult bindingResult) {
-
+    public ResponseEntity<String> createLocality(@RequestBody @Valid CreateRequest createRequest,
+                                                 BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors())
         {
             StringBuilder errorMessage = new StringBuilder();
@@ -39,7 +39,7 @@ public class LocalityController {
 
     @Operation(summary = "Удаление местоположения по ID")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteLocality(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteLocality(@PathVariable("id") Long id) throws Exception{
         return localityService.deleteLocality(id);
     }
 }

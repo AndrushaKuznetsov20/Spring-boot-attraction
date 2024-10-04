@@ -3,7 +3,6 @@ package com.trueman.attractions.controllers;
 import com.trueman.attractions.dto.attraction.CreateRequest;
 import com.trueman.attractions.dto.attraction.ListResponse;
 import com.trueman.attractions.dto.attraction.UpdateRequest;
-import com.trueman.attractions.models.Locality;
 import com.trueman.attractions.models.enums.TypeAttraction;
 import com.trueman.attractions.services.AttractionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,21 +20,22 @@ public class AttractionController {
 
     @Operation(summary = "Получение списка достопримечательностей")
     @GetMapping("/read")
-    public ResponseEntity<ListResponse> readAttraction(@RequestParam(required = false) TypeAttraction typeAttraction) {
+    public ResponseEntity<?> readAttraction(@RequestParam(required = false) TypeAttraction typeAttraction) throws Exception{
 
         return attractionService.getListAttraction(typeAttraction);
     }
 
     @Operation(summary = "Получение все достопримечательности конкретного местоположения")
     @GetMapping("/readByLocality")
-    public ResponseEntity<ListResponse> readAttractionByLocality(@RequestParam(required = false) Long localityId) {
+    public ResponseEntity<?> readAttractionByLocality(@RequestParam(required = false) Long localityId) throws Exception{
 
         return attractionService.getListAttractionByLocality(localityId);
     }
 
     @Operation(summary = "Создание новой достопримечательности")
     @PostMapping("/create")
-    public ResponseEntity<String> createAttraction(@RequestBody @Valid CreateRequest createRequest, BindingResult bindingResult) {
+    public ResponseEntity<String> createAttraction(@RequestBody @Valid CreateRequest createRequest,
+                                                   BindingResult bindingResult) throws Exception{
 
         if (bindingResult.hasErrors())
         {
@@ -49,7 +49,8 @@ public class AttractionController {
 
     @Operation(summary = "Обновление достопримечательности по ID")
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateAttraction(@PathVariable("id") Long id, @RequestBody @Valid UpdateRequest updateRequest, BindingResult bindingResult) {
+    public ResponseEntity<String> updateAttraction(@PathVariable("id") Long id, @RequestBody @Valid
+    UpdateRequest updateRequest, BindingResult bindingResult) throws Exception{
 
         if (bindingResult.hasErrors())
         {
@@ -63,7 +64,7 @@ public class AttractionController {
 
     @Operation(summary = "Удаление достопримечательности по ID")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAttraction(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteAttraction(@PathVariable("id") Long id) throws Exception{
         return attractionService.deleteAttraction(id);
     }
 }

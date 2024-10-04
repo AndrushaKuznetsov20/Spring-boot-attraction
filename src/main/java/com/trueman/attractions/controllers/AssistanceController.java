@@ -18,14 +18,15 @@ public class AssistanceController {
 
     @Operation(summary = "Получение списка услуг")
     @GetMapping("/read")
-    public ResponseEntity<ListResponse> readAssistance() {
+    public ResponseEntity<?> readAssistance() throws Exception{
 
         return assistanceService.getListAssistance();
     }
 
     @Operation(summary = "Создание новой услуги")
     @PostMapping("/create")
-    public ResponseEntity<String> createAssistance(@RequestBody @Valid CreateRequest createRequest, BindingResult bindingResult) {
+    public ResponseEntity<String> createAssistance(@RequestBody @Valid CreateRequest createRequest,
+                                                   BindingResult bindingResult) throws Exception{
 
         if (bindingResult.hasErrors())
         {
@@ -39,7 +40,7 @@ public class AssistanceController {
 
     @Operation(summary = "Удаление услуги по ID")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAssistance(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteAssistance(@PathVariable("id") Long id) throws Exception{
         return assistanceService.deleteAssistance(id);
     }
 }
