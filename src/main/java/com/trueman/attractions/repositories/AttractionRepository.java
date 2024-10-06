@@ -3,6 +3,7 @@ package com.trueman.attractions.repositories;
 import com.trueman.attractions.models.Attraction;
 import com.trueman.attractions.models.Locality;
 import com.trueman.attractions.models.enums.TypeAttraction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -22,8 +23,7 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long>, J
      * Запрос на сортировку списка по полю name.
      */
     @Query("SELECT a FROM Attraction a ORDER BY a.name")
-    List<Attraction> findAllSortByName();
-    List<Attraction> findAll();
+    List<Attraction> findAllSortByName(Specification<Attraction> specification);
     /**
      * Запрос на фильтрацию списка по полю тип достопримечательности.
      */

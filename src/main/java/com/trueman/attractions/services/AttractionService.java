@@ -12,6 +12,7 @@ import com.trueman.attractions.repositories.LocalityRepository;
 import com.trueman.attractions.specification.SpecificationAttraction;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,19 +39,65 @@ public class AttractionService {
 
         Specification<Attraction> specification = Specification.where(null);
 
-        if(typeAttraction!= null)
+        if(typeAttraction != null)
         {
             specification = specification.and(SpecificationAttraction.findByTypeAttraction(typeAttraction));
         }
-        if(localityId!= null)
+        if(localityId != null)
         {
             Locality locality = localityRepository.findById(localityId).orElse(null);
             specification = specification.and(SpecificationAttraction.findByLocality(locality));
         }
 
-        List<Attraction> attractions = attractionRepository.findAll(specification);
+        List<Attraction> attractions = attractionRepository.findAll(specification, Sort.by("name"));
 
-        return new ResponseEntity<>(attractions, HttpStatus.OK);
+        List<ReadRequest> attractionDTOList = new ArrayList<>();
+        for (Attraction attraction : attractions) {
+            ReadRequest attractionDto = new ReadRequest();
+            attractionDto.setId(attraction.getId());
+            attractionDto.setName(attraction.getName());
+            attractionDto.setCreateDate(attraction.getCreateDate());
+            attractionDto.setBriefDescription(attraction.getBriefDescription());
+            attractionDto.setTypeAttraction(attraction.getTypeAttraction());
+            attractionDto.setLocality(attraction.getLocality());
+            attractionDto.setAssistanceList(attraction.getAssistanceList());
+            attractionDTOList.add(attractionDto);
+        }
+
+        ListResponse attractionDtoDTOListResponse = new ListResponse();
+        attractionDtoDTOListResponse.setAttractions(attractionDTOList);
+
+        return new ResponseEntity<>(attractionDtoDTOListResponse, HttpStatus.OK);
+    }
+
+    /**
+     * Метод получения списка достопримечательностей конкретного местоположения.
+     */
+    public ResponseEntity<?> getListAttractionByLocality(Long localityId) throws Exception{
+        try {
+            Locality locality = localityRepository.findById(localityId).orElse(null);
+
+            List<Attraction> attractionList = attractionRepository.findByLocalityAttraction(locality);
+            List<ReadRequest> attractionDTOList = new ArrayList<>();
+
+            for (Attraction attraction : attractionList) {
+                ReadRequest attractionDto = new ReadRequest();
+                attractionDto.setId(attraction.getId());
+                attractionDto.setName(attraction.getName());
+                attractionDto.setCreateDate(attraction.getCreateDate());
+                attractionDto.setBriefDescription(attraction.getBriefDescription());
+                attractionDto.setTypeAttraction(attraction.getTypeAttraction());
+                attractionDto.setLocality(attraction.getLocality());
+                attractionDto.setAssistanceList(attraction.getAssistanceList());
+                attractionDTOList.add(attractionDto);
+            }
+            ListResponse attractionDtoDTOListResponse = new ListResponse();
+            attractionDtoDTOListResponse.setAttractions(attractionDTOList);
+
+            return new ResponseEntity<>(attractionDtoDTOListResponse, HttpStatus.OK);
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).body("Ошибка сервера!");
+        }
     }
 
     /**

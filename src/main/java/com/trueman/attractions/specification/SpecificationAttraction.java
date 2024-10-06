@@ -15,5 +15,4 @@ public class SpecificationAttraction {
         return (root, query, cb) ->
                 locality != null ? cb.equal(root.get("locality"), locality) : cb.conjunction();
     }
-
 }
