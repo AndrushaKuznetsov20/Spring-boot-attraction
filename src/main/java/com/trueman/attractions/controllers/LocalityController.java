@@ -26,7 +26,7 @@ public class LocalityController {
      */
     @Operation(summary = "Получение списка местоположений")
     @GetMapping("/read")
-    public ResponseEntity<?> readLocality() throws Exception{
+    public ResponseEntity<?> readLocality() {
 
         return localityService.getListLocality();
     }
@@ -53,7 +53,7 @@ public class LocalityController {
      */
     @Operation(summary = "Удаление местоположения по ID")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteLocality(@PathVariable("id") Long id) throws Exception{
+    public ResponseEntity<String> deleteLocality(@PathVariable("id") Long id) {
         return localityService.deleteLocality(id);
     }
 }

@@ -9,8 +9,10 @@ import com.trueman.attractions.models.Locality;
 import com.trueman.attractions.models.enums.TypeAttraction;
 import com.trueman.attractions.repositories.AttractionRepository;
 import com.trueman.attractions.repositories.LocalityRepository;
+import com.trueman.attractions.specification.SpecificationAttraction;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,66 +34,23 @@ public class AttractionService {
     /**
      * Метод получения списка отфильтрованных достопримечательностей по типу достопримечательности.
      */
-    public ResponseEntity<?> getListAttraction(TypeAttraction typeAttraction) throws Exception{
-        try {
-            List<Attraction> attractionList;
-            if (typeAttraction != null)
-            {
-                attractionList = attractionRepository.findByTypeAttractionSortByName(typeAttraction);
-            } else {
-                attractionList = attractionRepository.findAllSortByName();
-            }
+    public ResponseEntity<?> getListAttraction(TypeAttraction typeAttraction, Long localityId) throws Exception{
 
-            List<ReadRequest> attractionDTOList = new ArrayList<>();
+        Specification<Attraction> specification = Specification.where(null);
 
-            for (Attraction attraction : attractionList) {
-                ReadRequest attractionDto = new ReadRequest();
-                attractionDto.setId(attraction.getId());
-                attractionDto.setName(attraction.getName());
-                attractionDto.setCreateDate(attraction.getCreateDate());
-                attractionDto.setBriefDescription(attraction.getBriefDescription());
-                attractionDto.setTypeAttraction(attraction.getTypeAttraction());
-                attractionDto.setLocality(attraction.getLocality());
-                attractionDto.setAssistanceList(attraction.getAssistanceList());
-                attractionDTOList.add(attractionDto);
-            }
-            ListResponse attractionDtoDTOListResponse = new ListResponse();
-            attractionDtoDTOListResponse.setAttractions(attractionDTOList);
-
-            return new ResponseEntity<>(attractionDtoDTOListResponse, HttpStatus.OK);
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).body("Ошибка сервера!");
+        if(typeAttraction!= null)
+        {
+            specification = specification.and(SpecificationAttraction.findByTypeAttraction(typeAttraction));
         }
-    }
-
-    /**
-     * Метод получения списка достопримечательностей конкретного местоположения.
-     */
-    public ResponseEntity<?> getListAttractionByLocality(Long localityId) throws Exception{
-        try {
+        if(localityId!= null)
+        {
             Locality locality = localityRepository.findById(localityId).orElse(null);
-
-            List<Attraction> attractionList = attractionRepository.findByLocalityAttraction(locality);
-            List<ReadRequest> attractionDTOList = new ArrayList<>();
-
-            for (Attraction attraction : attractionList) {
-                ReadRequest attractionDto = new ReadRequest();
-                attractionDto.setId(attraction.getId());
-                attractionDto.setName(attraction.getName());
-                attractionDto.setCreateDate(attraction.getCreateDate());
-                attractionDto.setBriefDescription(attraction.getBriefDescription());
-                attractionDto.setTypeAttraction(attraction.getTypeAttraction());
-                attractionDto.setLocality(attraction.getLocality());
-                attractionDto.setAssistanceList(attraction.getAssistanceList());
-                attractionDTOList.add(attractionDto);
-            }
-            ListResponse attractionDtoDTOListResponse = new ListResponse();
-            attractionDtoDTOListResponse.setAttractions(attractionDTOList);
-
-            return new ResponseEntity<>(attractionDtoDTOListResponse, HttpStatus.OK);
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).body("Ошибка сервера!");
+            specification = specification.and(SpecificationAttraction.findByLocality(locality));
         }
+
+        List<Attraction> attractions = attractionRepository.findAll(specification);
+
+        return new ResponseEntity<>(attractions, HttpStatus.OK);
     }
 
     /**

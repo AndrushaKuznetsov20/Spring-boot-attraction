@@ -1,7 +1,6 @@
 package com.trueman.attractions.controllers;
 
 import com.trueman.attractions.dto.attraction.CreateRequest;
-import com.trueman.attractions.dto.attraction.ListResponse;
 import com.trueman.attractions.dto.attraction.UpdateRequest;
 import com.trueman.attractions.models.enums.TypeAttraction;
 import com.trueman.attractions.services.AttractionService;
@@ -29,23 +28,14 @@ public class AttractionController {
      */
     @Operation(summary = "Получение списка достопримечательностей")
     @GetMapping("/read")
-    public ResponseEntity<?> readAttraction(@RequestParam(required = false) TypeAttraction typeAttraction) throws Exception{
+    public ResponseEntity<?> readAttraction(@RequestParam(required = false) TypeAttraction typeAttraction,
+                                            @RequestParam(required = false) Long localityId) throws Exception{
 
-        return attractionService.getListAttraction(typeAttraction);
+        return attractionService.getListAttraction(typeAttraction, localityId);
     }
 
     /**
-     * Метод получения списка существующих достопримечательностей конкретного местоположения.
-     */
-    @Operation(summary = "Получение все достопримечательности конкретного местоположения")
-    @GetMapping("/readByLocality")
-    public ResponseEntity<?> readAttractionByLocality(@RequestParam(required = false) Long localityId) throws Exception{
-
-        return attractionService.getListAttractionByLocality(localityId);
-    }
-
-    /**
-     * Метод создания новой достопримечательностей.
+     * Метод создания новой достопримечательности.
      */
     @Operation(summary = "Создание новой достопримечательности")
     @PostMapping("/create")

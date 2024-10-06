@@ -1,7 +1,6 @@
 package com.trueman.attractions.controllers;
 
 import com.trueman.attractions.dto.assistance.CreateRequest;
-import com.trueman.attractions.dto.assistance.ListResponse;
 import com.trueman.attractions.services.AssistanceService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

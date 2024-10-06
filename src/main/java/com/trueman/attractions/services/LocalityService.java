@@ -3,15 +3,12 @@ package com.trueman.attractions.services;
 import com.trueman.attractions.dto.locality.CreateRequest;
 import com.trueman.attractions.dto.locality.ListResponse;
 import com.trueman.attractions.dto.locality.ReadRequest;
-import com.trueman.attractions.models.Assistance;
 import com.trueman.attractions.models.Locality;
 import com.trueman.attractions.repositories.LocalityRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +55,7 @@ public class LocalityService {
     /**
      * Метод создания нового местоположения.
      */
-    public ResponseEntity<String> createLocality(CreateRequest createRequest) throws Exception {
+    public ResponseEntity<String> createLocality(CreateRequest createRequest) {
         try {
             Locality locality = new Locality();
             locality.setSettlement(createRequest.getSettlement());
