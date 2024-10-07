@@ -31,7 +31,7 @@ public class Locality {
     private String region;
 
     @Description("Список достопримечательностей")
-    @JsonManagedReference
+    @JsonManagedReference(value = "localityReference")
     @OneToMany(mappedBy = "locality")
     private List<Attraction> attractionList;
 

@@ -23,5 +23,4 @@ public class CreateRequest {
     private TypeAttraction typeAttraction;
 
     private Locality locality;
-
 }

@@ -49,6 +49,13 @@ public class AssistanceController {
         return assistanceService.createAssistance(createRequest);
     }
 
+    @Operation(summary = "Добавление достопримечательности")
+    @PostMapping("/addAttraction/{attractionId}/{assistanceId}")
+    public ResponseEntity<String> addAttraction(@PathVariable("attractionId") Long attractionId,
+    @PathVariable("assistanceId") Long assistanceId) throws Exception{
+        return assistanceService.addAttractionByListAssistance(attractionId, assistanceId);
+    }
+
     /**
      * Метод удаления услуги.
      */

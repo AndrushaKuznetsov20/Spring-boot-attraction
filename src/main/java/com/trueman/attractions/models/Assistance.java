@@ -1,5 +1,7 @@
 package com.trueman.attractions.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.trueman.attractions.models.enums.TypeAssistance;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
@@ -36,6 +38,7 @@ public class Assistance {
     private String performer;
 
     @Description("Список достопримечательностей")
+//    @JsonManagedReference(value = "attractionReference")
     @ManyToMany
     @JoinTable
     private List<Attraction> attractionList;

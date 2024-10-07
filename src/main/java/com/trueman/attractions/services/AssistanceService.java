@@ -4,7 +4,9 @@ import com.trueman.attractions.dto.assistance.CreateRequest;
 import com.trueman.attractions.dto.assistance.ListResponse;
 import com.trueman.attractions.dto.assistance.ReadRequest;
 import com.trueman.attractions.models.Assistance;
+import com.trueman.attractions.models.Attraction;
 import com.trueman.attractions.repositories.AssistanceRepository;
+import com.trueman.attractions.repositories.AttractionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class AssistanceService {
      * Внедрение репозитория для взаимодействия с базой данных.
      */
     private final AssistanceRepository assistanceRepository;
+    private final AttractionRepository attractionRepository;
 
     /**
      * Метод для получения списка услуг
@@ -38,6 +41,7 @@ public class AssistanceService {
                 assistanceDto.setTypeAssistance(assistance.getTypeAssistance());
                 assistanceDto.setBriefDescription(assistance.getBriefDescription());
                 assistanceDto.setPerformer(assistance.getPerformer());
+                assistanceDto.setAttractionList(assistance.getAttractionList());
                 assistanceDTOList.add(assistanceDto);
             }
             ListResponse assistanceDTOListResponse = new ListResponse();
@@ -65,6 +69,22 @@ public class AssistanceService {
             return ResponseEntity.badRequest().body("Ошибка: неверные данные!");
         } catch (Exception exception) {
             return ResponseEntity.status(500).body("Ошибка сервера!");
+        }
+    }
+
+    public ResponseEntity<String> addAttractionByListAssistance(Long attractionId, Long assistanceId) {
+        Attraction attraction = attractionRepository.findById(attractionId).orElse(null);
+        Assistance assistance = assistanceRepository.findById(assistanceId).orElse(null);
+
+        if (attraction != null && assistance != null) {
+            assistance.getAttractionList().add(attraction);
+            attraction.getAssistanceList().add(assistance);
+            attractionRepository.save(attraction);
+            assistanceRepository.save(assistance);
+            return ResponseEntity.ok("Достопримечательность успешно добавлена!");
+        }
+        else {
+            return ResponseEntity.ok("Услуга или достопримечательность не найдены!");
         }
     }
 

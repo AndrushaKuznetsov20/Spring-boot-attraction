@@ -110,7 +110,8 @@ public class AttractionService {
             attraction.setBriefDescription(createRequest.getBriefDescription());
             attraction.setCreateDate();
             attraction.setTypeAttraction(createRequest.getTypeAttraction());
-            attraction.setLocality(createRequest.getLocality());
+            Locality locality = localityRepository.findById(createRequest.getLocality().getId()).orElse(null);
+            attraction.setLocality(locality);
 
             attractionRepository.save(attraction);
             return ResponseEntity.ok("Достопримечательность успешно создана!");

@@ -42,7 +42,6 @@ public class AttractionController {
     @PostMapping("/create")
     public ResponseEntity<String> createAttraction(@RequestBody @Valid CreateRequest createRequest,
                                                    BindingResult bindingResult) throws Exception{
-
         if (bindingResult.hasErrors())
         {
             StringBuilder errorMessage = new StringBuilder();

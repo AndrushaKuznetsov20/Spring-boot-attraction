@@ -1,6 +1,7 @@
 package com.trueman.attractions.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.trueman.attractions.models.enums.TypeAttraction;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
@@ -42,12 +43,13 @@ public class Attraction {
     private TypeAttraction typeAttraction;
 
     @Description("Местоположение")
-    @JsonBackReference
+    @JsonBackReference(value = "localityReference")
     @ManyToOne
     @JoinColumn(name = "locality", nullable = false)
     private Locality locality;
 
     @Description("Список сопровождений (услуг)")
+    @JsonBackReference(value = "attractionReference")
     @ManyToMany(mappedBy = "attractionList")
     private List<Assistance> assistanceList;
 
