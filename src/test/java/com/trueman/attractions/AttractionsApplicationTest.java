@@ -1,11 +1,16 @@
 package com.trueman.attractions;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.trueman.attractions.servicesTest.AssistanceServiceTest;
+import com.trueman.attractions.servicesTest.AttractionServiceTest;
+import com.trueman.attractions.servicesTest.LocalityServiceTest;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@SpringBootTest
+@Suite
+@SelectClasses({
+        AssistanceServiceTest.class,
+        AttractionServiceTest.class,
+        LocalityServiceTest.class
+})
 public class AttractionsApplicationTest {
-    @Test
-    void contextLoads() {
-    }
 }

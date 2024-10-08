@@ -31,7 +31,7 @@ public class LocalityServiceTest {
     private LocalityService localityService;
 
     @Test
-    void testGetListLocality() {
+    public void testGetListLocality() {
         List<Locality> localityList = new ArrayList<>();
 
         Locality locality_1 = new Locality();
@@ -61,7 +61,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    void testCreateNewLocality() {
+    public void testCreateNewLocality() {
         CreateRequest createRequest = new CreateRequest();
         createRequest.setSettlement("Владимир");
         createRequest.setRegion("Владимирская область,33 регион");
@@ -78,7 +78,7 @@ public class LocalityServiceTest {
     }
 
     @Test
-    void testDeleteLocality() {
+    public void testDeleteLocality() {
         Long id = 1L;
 
         Locality locality = new Locality();

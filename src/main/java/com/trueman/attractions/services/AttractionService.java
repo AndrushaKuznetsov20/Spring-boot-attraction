@@ -71,36 +71,6 @@ public class AttractionService {
     }
 
     /**
-     * Метод получения списка достопримечательностей конкретного местоположения.
-     */
-    public ResponseEntity<?> getListAttractionByLocality(Long localityId) throws Exception{
-        try {
-            Locality locality = localityRepository.findById(localityId).orElse(null);
-
-            List<Attraction> attractionList = attractionRepository.findByLocalityAttraction(locality);
-            List<ReadRequest> attractionDTOList = new ArrayList<>();
-
-            for (Attraction attraction : attractionList) {
-                ReadRequest attractionDto = new ReadRequest();
-                attractionDto.setId(attraction.getId());
-                attractionDto.setName(attraction.getName());
-                attractionDto.setCreateDate(attraction.getCreateDate());
-                attractionDto.setBriefDescription(attraction.getBriefDescription());
-                attractionDto.setTypeAttraction(attraction.getTypeAttraction());
-                attractionDto.setLocality(attraction.getLocality());
-                attractionDto.setAssistanceList(attraction.getAssistanceList());
-                attractionDTOList.add(attractionDto);
-            }
-            ListResponse attractionDtoDTOListResponse = new ListResponse();
-            attractionDtoDTOListResponse.setAttractions(attractionDTOList);
-
-            return new ResponseEntity<>(attractionDtoDTOListResponse, HttpStatus.OK);
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).body("Ошибка сервера!");
-        }
-    }
-
-    /**
      * Метод создания новой достопримечательности.
      */
     public ResponseEntity<String> createAttraction(CreateRequest createRequest) throws Exception{
