@@ -133,6 +133,15 @@
 			<version>4.0.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -173,6 +182,19 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>4.24.0</version>
+				<configuration>
+					<changeLogFile>src/main/resources/db/changelog/changelog-master.yaml</changeLogFile>
+					<outputChangeLogFile>src/main/resources/db/changelog/generated-changelog.yaml</outputChangeLogFile>
+					<url>jdbc:postgresql://localhost:5433/db_attractions</url>
+					<username>postgres</username>
+					<password>Kuznetsov12</password>
+					<driver>org.postgresql.Driver</driver>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
@@ -195,5 +217,4 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

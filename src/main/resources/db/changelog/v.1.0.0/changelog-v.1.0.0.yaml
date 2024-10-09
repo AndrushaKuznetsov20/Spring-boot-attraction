@@ -1,0 +1,280 @@
+databaseChangeLog:
+- changeSet:
+    id: 1728429341706-1
+    author: User (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: id
+            startWith: 3
+            type: BIGINT
+        - column:
+            name: active
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: number
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: role
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1728429341706-2
+    author: User (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: assistance_pkey
+            name: id
+            startWith: 6
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: brief_description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: performer
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: type_assistance
+            type: VARCHAR(255)
+        tableName: assistance
+- changeSet:
+    id: 1728429341706-3
+    author: User (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: attraction_pkey
+            name: id
+            startWith: 23
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: brief_description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: creation_date
+            type: date
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: type_attraction
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: locality
+            type: BIGINT
+        tableName: attraction
+- changeSet:
+    id: 1728429341706-4
+    author: User (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: locality_pkey
+            name: id
+            startWith: 13
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: latitude
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: longitude
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: region
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: settlement
+            type: VARCHAR(255)
+        tableName: locality
+- changeSet:
+    id: 1728429341706-5
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: uk_6dotkott2kjsp8vw4d0m25fb7
+        tableName: users
+- changeSet:
+    id: 1728429341706-6
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: username
+        constraintName: uk_r43af9ap4edm43mmtq01oddj6
+        tableName: users
+- changeSet:
+    id: 1728429341706-7
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: number
+        constraintName: uk_rausl0ctj9serlpp463b7ku92
+        tableName: users
+- changeSet:
+    id: 1728429341706-8
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: uk_pkl6ep8pexyl88g9wmle0w4nk
+        tableName: attraction
+- changeSet:
+    id: 1728429341706-9
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: region
+        constraintName: uk_a4axqivhiu5swvr5hjp1aac5
+        tableName: locality
+- changeSet:
+    id: 1728429341706-10
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: longitude
+        constraintName: uk_kbgc55mvdotff4h2qcbjx5igw
+        tableName: locality
+- changeSet:
+    id: 1728429341706-11
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: latitude
+        constraintName: uk_kcgyxxg2qujwo532imrxjdjsm
+        tableName: locality
+- changeSet:
+    id: 1728429341706-12
+    author: User (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: settlement
+        constraintName: uk_qnsuvcf9g4yeqgs70gvunb9qg
+        tableName: locality
+- changeSet:
+    id: 1728429341706-13
+    author: User (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: assistance_list_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: attraction_list_id
+            type: BIGINT
+        tableName: assistance_attraction_list
+- changeSet:
+    id: 1728429341706-14
+    author: User (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: locality
+        baseTableName: attraction
+        constraintName: fk3oe87g3oe1th4t1k9edwgwcyf
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: locality
+        validate: true
+- changeSet:
+    id: 1728429341706-15
+    author: User (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: assistance_list_id
+        baseTableName: assistance_attraction_list
+        constraintName: fkn773y8fm52ho4q7qva5uch9dr
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: assistance
+        validate: true
+- changeSet:
+    id: 1728429341706-16
+    author: User (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: attraction_list_id
+        baseTableName: assistance_attraction_list
+        constraintName: fksh42cenus2n6t0cpossgcvt3e
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: attraction
+        validate: true
+
