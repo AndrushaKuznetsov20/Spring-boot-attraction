@@ -1,14 +1,17 @@
 package com.trueman.attractions.integrationTest;
 
-import com.trueman.attractions.dto.locality.CreateRequest;
+import com.trueman.attractions.dto.assistance.CreateRequest;
+import com.trueman.attractions.dto.assistance.ListResponse;
+import com.trueman.attractions.dto.assistance.ReadRequest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
-import com.trueman.attractions.dto.locality.ListResponse;
-import com.trueman.attractions.dto.locality.ReadRequest;
+import com.trueman.attractions.models.Assistance;
 import com.trueman.attractions.models.Locality;
+import com.trueman.attractions.models.enums.TypeAssistance;
+import com.trueman.attractions.repositories.AssistanceRepository;
 import com.trueman.attractions.repositories.LocalityRepository;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
@@ -19,7 +22,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -42,12 +44,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class LocalityRepositoryTest {
+public class AssistanceRepositoryTest {
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private LocalityRepository localityRepository;
+    private AssistanceRepository assistanceRepository;
 
     @Container
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:15"));
@@ -62,38 +64,35 @@ public class LocalityRepositoryTest {
 
     @Test
     @Order(3)
-    void getListLocality() throws Exception {
-        Locality locality1 = new Locality();
-        locality1.setId(1L);
-        locality1.setSettlement("Moscow");
-        locality1.setRegion("Moscow region");
-        locality1.setLatitude(525.7558);
-        locality1.setLongitude(327.6173);
+    void getListAssistance() throws Exception {
+        Assistance assistance1 = new Assistance();
+        assistance1.setId(1L);
+        assistance1.setTypeAssistance(TypeAssistance.PHOTOSHOOT);
+        assistance1.setBriefDescription("Description");
+        assistance1.setPerformer("Photoshoot");
 
-        localityRepository.save(locality1);
+        assistanceRepository.save(assistance1);
 
-        var getListResponse = mvc.perform(get("http://localhost:8092/locality/read")
+        var getListResponse = mvc.perform(get("http://localhost:8092/assistance/read")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                         .andReturn();
 
-        List<Locality> localities = localityRepository.findAll();
+        List<Assistance> assistances = assistanceRepository.findAll();
 
-        if (!localities.isEmpty()) {
-            List<ReadRequest> expectedLocalities = localities.stream().map(locality -> {
+        if (!assistances.isEmpty()) {
+            List<ReadRequest> expectedAssistances = assistances.stream().map(assistance -> {
                 ReadRequest dto = new ReadRequest();
-                dto.setId(locality.getId());
-                dto.setSettlement(locality.getSettlement());
-                dto.setRegion(locality.getRegion());
-                dto.setAttractionList(locality.getAttractionList());
-                dto.setLatitude(locality.getLatitude());
-                dto.setLongitude(locality.getLongitude());
+                dto.setId(assistance.getId());
+                dto.setTypeAssistance(assistance.getTypeAssistance());
+                dto.setBriefDescription(assistance.getBriefDescription());
+                dto.setPerformer(assistance.getPerformer());
                 return dto;
             }).toList();
 
             ListResponse expectedResponse = new ListResponse();
-            expectedResponse.setLocalities(expectedLocalities);
+            expectedResponse.setAssistances(expectedAssistances);
 
             String expectedJson = new ObjectMapper().writeValueAsString(expectedResponse);
 
@@ -108,54 +107,50 @@ public class LocalityRepositoryTest {
     @SneakyThrows
     void createLocality() {
         CreateRequest createRequest = new CreateRequest();
-        createRequest.setSettlement("Moscow");
-        createRequest.setRegion("Moscow region");
-        createRequest.setLatitude(55.7558);
-        createRequest.setLongitude(37.6173);
+        createRequest.setTypeAssistance(TypeAssistance.FOOD);
+        createRequest.setBriefDescription("Description");
+        createRequest.setPerformer("Food");
 
-        var createResponse = mvc.perform(post("http://localhost:8092/locality/create")
+        var createResponse = mvc.perform(post("http://localhost:8092/assistance/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(createRequest)))
-                .andExpect(status().isOk())
-                .andReturn();
+                        .andExpect(status().isOk())
+                        .andReturn();
 
-        String expected = "Местоположение успешно создано!";
+        String expected = "Услуга успешно создана!";
         assertEquals(expected, createResponse.getResponse().getContentAsString());
 
-        var localities = localityRepository.findAll();
-        assertThat(localities).isNotEmpty();
+        var assistances = assistanceRepository.findAll();
+        assertThat(assistances).isNotEmpty();
 
-        boolean containsCreatedLocality = localities.stream().anyMatch(locality ->
-                        locality.getSettlement().equals(createRequest.getSettlement()) &&
-                        locality.getRegion().equals(createRequest.getRegion()) &&
-                        locality.getLatitude() == createRequest.getLatitude() &&
-                        locality.getLongitude() == createRequest.getLongitude()
+        boolean containsCreatedAssistance = assistances.stream().anyMatch(assistance ->
+                        assistance.getTypeAssistance().equals(createRequest.getTypeAssistance()) &&
+                        assistance.getBriefDescription().equals(createRequest.getBriefDescription()) &&
+                        assistance.getPerformer().equals(createRequest.getPerformer())
         );
 
-        assertThat(containsCreatedLocality).isTrue();
-
+        assertThat(containsCreatedAssistance).isTrue();
 
     }
     @Test
     @Order(1)
     void deleteLocalityById() throws Exception {
-        Locality locality = new Locality();
-        locality.setId(1L);
-        locality.setSettlement("Москва");
-        locality.setRegion("Московская область");
-        locality.setLatitude(55.7558);
-        locality.setLongitude(37.6173);
+        Assistance assistance = new Assistance();
+        assistance.setId(1L);
+        assistance.setTypeAssistance(TypeAssistance.CAR_TOUR);
+        assistance.setBriefDescription("Description1");
+        assistance.setPerformer("Performer1");
 
-        localityRepository.save(locality);
+        assistanceRepository.save(assistance);
 
-        var deleteResponse = mvc.perform(delete("http://localhost:8092/locality/delete/1"))
+        var deleteResponse = mvc.perform(delete("http://localhost:8092/assistance/delete/1"))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String expected = "Местоположение успешно удалено!";
+        String expected = "Услуга успешно удалена!";
         assertEquals(expected, deleteResponse.getResponse().getContentAsString());
 
-        assertThat(localityRepository.existsById(1L)).isFalse();
+        assertThat(assistanceRepository.existsById(1L)).isFalse();
 
     }
 }
