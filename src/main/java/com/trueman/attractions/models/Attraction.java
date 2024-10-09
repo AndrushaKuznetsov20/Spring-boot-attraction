@@ -30,7 +30,7 @@ public class Attraction {
     private String name;
 
     @Description("Дата создания")
-    @Column(name = "CreationDate", nullable = false)
+    @Column(name = "CreationDate")
     private LocalDate createDate;
 
     @Description("Краткое описание")
