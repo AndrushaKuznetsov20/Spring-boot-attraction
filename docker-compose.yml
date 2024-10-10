@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: db_attractions
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Kuznetsov12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAVA_VERSION: 17
+    ports:
+      - "8092:8092"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db_attractions
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Kuznetsov12
+    networks:
+      - backend
+volumes:
+  postgres_data:
+networks:
+  backend:
+    driver: bridge
+
+
