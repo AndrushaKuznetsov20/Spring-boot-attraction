@@ -1,7 +1,9 @@
 package com.trueman.attractions.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trueman.attractions.dto.locality.CreateRequest;
 import com.trueman.attractions.services.LocalityService;
+import com.trueman.attractions.services.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class LocalityController {
      * Внедрение зависимости для бизнес-логики.
      */
     private final LocalityService localityService;
-
+    private final WeatherService weatherService;
     /**
      * Метод получения списка существующих местоположений.
      */
@@ -55,5 +57,11 @@ public class LocalityController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteLocality(@PathVariable("id") Long id) {
         return localityService.deleteLocality(id);
+    }
+
+    @Operation(summary = "Получение данных о погоде в определённом местоположении")
+    @GetMapping("/weather")
+    public ResponseEntity<?> getWeather(@RequestParam double latitude, @RequestParam double longitude) throws JsonProcessingException {
+        return weatherService.getCurrentWeather(latitude, longitude);
     }
 }

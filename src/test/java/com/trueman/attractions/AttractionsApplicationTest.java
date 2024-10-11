@@ -2,6 +2,6 @@ package com.trueman.attractions;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 public class AttractionsApplicationTest {
 }
