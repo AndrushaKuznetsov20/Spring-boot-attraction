@@ -2,6 +2,7 @@ package com.trueman.attractions.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trueman.attractions.dto.locality.CreateRequest;
+import com.trueman.attractions.dto.weather.ResponseClient;
 import com.trueman.attractions.services.LocalityService;
 import com.trueman.attractions.services.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,7 +62,7 @@ public class LocalityController {
 
     @Operation(summary = "Получение данных о погоде в определённом местоположении")
     @GetMapping("/weather")
-    public ResponseEntity<?> getWeather(@RequestParam double latitude, @RequestParam double longitude) throws JsonProcessingException {
+    public ResponseEntity<ResponseClient> getWeather(@RequestParam double latitude, @RequestParam double longitude) throws JsonProcessingException {
         return weatherService.getCurrentWeather(latitude, longitude);
     }
 }
